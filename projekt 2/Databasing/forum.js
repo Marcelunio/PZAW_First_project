@@ -22,7 +22,7 @@ export function postEntry(entry)
                 return "tytuł nie poprawnej wielkości"
       }
     }
-    database_operations.post_entry.run(entry.body,entry.title)
+    database_operations.post_entry.run(entry.title,entry.body)
     return true
 }
 
