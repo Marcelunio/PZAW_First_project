@@ -62,7 +62,7 @@ app.post("/entries/:post/update",(req,res)=>
   }
 })
 
-app.get("/entries/:post/delete",(req,res)=>
+app.post("/entries/:post/delete",(req,res)=>
 {
   if(forum.hasEntry(req.params.post))
   {

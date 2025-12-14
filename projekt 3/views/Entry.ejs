@@ -1,15 +1,12 @@
 <%- include("./templates/partial_header.ejs") %>
 <main>
-    <div class="icon">
-        <a href="./<%= id %>/delete">
+    <form method="post" action="./<%= id %>/delete" class="icon">
             <img src="/icons/delete.svg" />
-        </a>
-    </div>
-    <div class="icon">
-        <a href="./<%= id %>/edit">
+    </form>
+    <form method="post" action="./<%= id %>/edit" class="icon">
+        
             <img src="/icons/edit.svg"  />
-        </a>
-    </div>
+    </form>
     <h1><%= entry.title %></h1>
     <hr>
     <p><%= entry.body %></p>

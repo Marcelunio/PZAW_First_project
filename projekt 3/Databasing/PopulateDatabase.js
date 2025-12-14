@@ -34,3 +34,4 @@ database.exec(
 database.exec(
    `INSERT INTO entries(title,body) VALUES ('NIKON D500','${lorem_ipsum}'),('Canon EOS r50','${lorem_ipsum}'),('NIKON Z50 II','${lorem_ipsum}') `
 )
+database.close()
