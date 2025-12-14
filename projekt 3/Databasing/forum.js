@@ -10,12 +10,10 @@ const database_operations = {
     get_entry: database.prepare("SELECT title,body FROM entries WHERE id = ?; "),
     post_entry: database.prepare("INSERT INTO entries(title,body) VALUES (?,?) "),
     delete_entry: database.prepare('DELETE FROM entries WHERE id=?;'),
-    update_title_entry: database.prepare('UPDATE entries SET title=? WHERE id=? ;'),
-    update_body_entry: database.prepare('UPDATE entries SET body=? WHERE id=? ;'),
     update_entry: database.prepare('UPDATE entries SET title=?, body=? WHERE id=? ;')
 }
 
-export function postEntry(entry)
+export function checkEntry(entry)
 {
     if (!entry.hasOwnProperty("body") || !entry.hasOwnProperty("title")){return "brakuje pola"; }
     else {
@@ -26,8 +24,11 @@ export function postEntry(entry)
                 return "tytuł nie poprawnej wielkości"
       }
     }
+    return ""
+}
+export function postEntry(entry)
+{
     database_operations.post_entry.run(entry.title,entry.body)
-    return true
 }
 
 export function getEntries()
@@ -58,29 +59,12 @@ export function deleteEntry(id)
 
 export function modifyEntry(id,entry_change)
 {
-    if(hasEntry(id))
-    {
-        if(entry_change.title==null && entry_change.body==null)
-        {
-            return false;
-        }
-        else if(entry_change.title==null)
-        {
-            database_operations.update_body_entry(entry_change.body,id);
-        }
-        else if(body==null)
-        {
-            database_operations.update_title_entry(entry_change.title,id);
-        }
-        else
-        {
-            database.database_operations.update_entry(entry_change.title,entry_change.body,id);
-        }
-        
-    }
+
+    database_operations.update_entry.run(entry_change.title,entry_change.body,id)
 }
 
 export default  {
+    checkEntry,
     getEntries,
     hasEntry,
     getEntry,

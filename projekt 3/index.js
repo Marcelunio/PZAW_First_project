@@ -29,36 +29,55 @@ app.post("/new_entry", (req, res) => {
       title: req.body.title,
       body: req.body.body,
     };
-    var check_errors=forum.postEntry(entry)
-    if(check_errors===true)
+    var errors=forum.checkEntry(entry)
+    if(errors==="")
     {
+        forum.postEntry(entry)
         res.redirect(`/`);
     }
     else {
       res.status(400);
       res.render("Index", {
-        error: check_errors,
+        error: errors,
         title: "Obiektywnie",
         entries: forum.getEntries()
       });
     }
   });
-
-app.post("/entries/:post/update",(req,res)=>
+app.get("/entries/:post/edit",(req,res)=>{
+   if(forum.hasEntry(req.params.post))
+    {
+        const post = forum.getEntry(req.params.post);
+        res.render("Entry_edit",{title:`Obiektywnie - ${post.title} - edytuj`,entry:post, id: req.params.post})
+  } else {
+    res.sendStatus(404);
+  }
+})
+app.post("/entries/:post/edit",(req,res)=>
 {
   let entry_change =
   {
     title: req.body.title,
     body: req.body.body,
   };
-  if(hasEntry(req.params.post))
+  var exist= hasEntry(req.params.post)
+  var errors= forum.checkEntry(entry_change)
+  if( exist && errors=="" )
   {
     forum.modifyEntry(req.params.post,entry_change);
-    res.redirect("/entries/:post")
+    res.redirect(`/entries/${req.params.post}`)
   }
   else
   {
-
+      if(exist)
+      {
+       res.status(400);
+       res.render("Entry_edit",{title:`Obiektywnie - ${post.title} - edytuj`,entry:post, id: req.params.post,error: errors})
+      }
+      else
+      {
+        res.sendStatus(404);
+      }
   }
 })
 
