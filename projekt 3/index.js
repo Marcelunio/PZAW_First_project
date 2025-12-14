@@ -72,6 +72,7 @@ app.post("/entries/:post/edit",(req,res)=>
       if(exist)
       {
        res.status(400);
+      const post = forum.getEntry(req.params.post);
        res.render("Entry_edit",{title:`Obiektywnie - ${post.title} - edytuj`,entry:post, id: req.params.post,error: errors})
       }
       else
