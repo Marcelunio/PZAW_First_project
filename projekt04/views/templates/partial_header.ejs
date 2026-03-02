@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset ="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/style.css">
+    <link rel="shortcut icon" href="favicon.svg" type="image/svg">
+    <title><%= title %></title>
+</head>
+<body>
+<header>
+    <a href="/">
+    <h1>Obiektywnie</h1>
+    </a>
+</header>
+  <a href="/settings/toggle-theme?next=<%- encodeURIComponent(page) %>">
+        <% if (app.theme === "dark") { %>
+        <strong>Ciemny</strong> | Jasny
+        <% } else { %>
+        Ciemny | <strong>Jasny</strong>
+        <% } %>
+      </a>
